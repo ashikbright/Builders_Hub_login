@@ -50,11 +50,12 @@
         app:layout_constraintVertical_bias="0.09" />
 
     <EditText
-        android:id="@+id/ctxtemail"
+        android:id="@+id/frgttxtemail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Enter Email address"
+        android:drawableStart="@android:drawable/ic_dialog_email"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

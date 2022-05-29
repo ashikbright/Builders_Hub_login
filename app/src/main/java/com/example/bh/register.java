@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,7 +29,7 @@ public class register extends AppCompatActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         mAuth = FirebaseAuth.getInstance();
-        mail=findViewById(R.id.ctxtemail);
+        mail=findViewById(R.id.frgttxtemail);
         password=findViewById(R.id.ctxtpassword);
         cpassword=findViewById(R.id.ctxtconfpassword);
         login=findViewById(R.id.txtlogin);

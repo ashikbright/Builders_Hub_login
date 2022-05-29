@@ -17,9 +17,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    private TextView registeruser;
+    private TextView registeruser,frgtpassword;
     private EditText mail,password;
     private Button loginuser;
     private FirebaseAuth mAuth;
@@ -34,6 +35,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         registeruser=findViewById(R.id.rgtr);
         progressBar=findViewById(R.id.prgbarlogin);
         mAuth=FirebaseAuth.getInstance();
+        frgtpassword=findViewById(R.id.frgtpass);
+
+        frgtpassword.setOnClickListener(MainActivity.this);
         registeruser.setOnClickListener(MainActivity.this);
         loginuser.setOnClickListener(MainActivity.this);
     }
@@ -47,6 +51,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     break;
                 case R.id.btnlogin:
                     loginac();
+                    break;
+                case R.id.frgtpass:
+                    startActivity(new Intent(MainActivity.this,forgot_password.class));
                     break;
             }
     }
@@ -76,11 +83,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            //redirect to admins home page
-                            startActivity(new Intent(MainActivity.this,UsersHome.class));
-                        }
-                        else
+                            FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
+                            if(user.isEmailVerified()){
+                                //redirect to admins home page
+                                startActivity(new Intent(MainActivity.this,UsersHome.class));
+                            }
+                                else{
+                                    user.sendEmailVerification();
+                                    Toast.makeText(MainActivity.this, "Check Your email to verify your account....", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        else {
                             Toast.makeText(MainActivity.this, "Failed to login", Toast.LENGTH_LONG).show();
+                        }
                     }
                 });
     }
