@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         frgtpassword.setOnClickListener(MainActivity.this);
         registeruser.setOnClickListener(MainActivity.this);
         loginuser.setOnClickListener(MainActivity.this);
+
     }
 
     @Override
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     break;
             }
     }
+
     private void loginac(){
         String em=mail.getText().toString();
         String pass=password.getText().toString();
@@ -72,11 +74,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             password.requestFocus();
             return;
         }
-       if(Patterns.EMAIL_ADDRESS.matcher(em).matches()){
-           mail.setError("Please Enter a valid email!!");
-           mail.requestFocus();
-           return;
-       }
         progressBar.setVisibility(View.VISIBLE);
         mAuth.createUserWithEmailAndPassword(em,pass)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -85,14 +82,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         if(task.isSuccessful()){
                             FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
                             if(user.isEmailVerified()){
-                                //redirect to admins home page
+                                //redirect to users home page
                                 startActivity(new Intent(MainActivity.this,UsersHome.class));
                             }
-                                else{
+                               else{
                                     user.sendEmailVerification();
                                     Toast.makeText(MainActivity.this, "Check Your email to verify your account....", Toast.LENGTH_SHORT).show();
                                 }
-                            }
+                           }
                         else {
                             Toast.makeText(MainActivity.this, "Failed to login", Toast.LENGTH_LONG).show();
                         }
